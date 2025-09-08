@@ -6,6 +6,8 @@ ETL 파이프라인
 
 import os
 from datetime import datetime, timedelta
+from pathlib import Path
+import csv
 from backend.app.settings import settings
 from backend.app.embeddings import embed_texts
 from backend.app.db.vector import ensure_schema, get_pg_connection
@@ -45,13 +47,85 @@ def collect_logs(date_str: str, base_dir: str, prefix: str):
 
 
 def run_etl():
-    """ETL 실행: 스키마 보장 → 수집 → 임베딩 → 적재"""
-    ensure_schema()
+    """ETL 실행: 스키마 보장 → 수집 → 임베딩 → 적재
+
+    - MOCK_DB_ENABLED일 경우 파일 기반(history_/event_history_) 텍스트를 로드한다.
+    - VECTORDB_ENABLED가 False이면 로컬 파일에 적재 결과를 저장한다(mock 출력).
+    """
+    def collect_mock_db_rows(date_str: str) -> list[str]:
+        base = Path(settings.MOCK_DB_DIR)
+        rows: list[str] = []
+        # history CSV (1분 단위)
+        hist_csv = base / f"history_{date_str}.csv"
+        if hist_csv.exists():
+            with hist_csv.open("r", encoding="utf-8", errors="ignore", newline="") as f:
+                reader = csv.DictReader(f)
+                for r in reader:
+                    parts = [
+                        "type=history",
+                        f"ts={r.get('YYYYMMDDHHmmss','')}",
+                        f"Hostname={r.get('Hostname','')}",
+                        f"IP={r.get('IP','')}",
+                        f"CPU_Usage={r.get('CPU_Usage','')}",
+                        f"Memory_Usage={r.get('Memory_Usage','')}",
+                        f"Swap_Usage={r.get('Swap_Usage','')}",
+                        f"Filesystem_Usage={r.get('Filesystem_Usage','')}",
+                        f"Ping_Status={r.get('Ping_Status','')}",
+                    ]
+                    rows.append(" ".join(parts))
+        # event_history CSV (1분 단위)
+        evt_csv = base / f"event_history_{date_str}.csv"
+        if evt_csv.exists():
+            with evt_csv.open("r", encoding="utf-8", errors="ignore", newline="") as f:
+                reader = csv.DictReader(f)
+                for r in reader:
+                    parts = [
+                        "type=event_history",
+                        f"ts={r.get('YYYYMMDDHHmmss','')}",
+                        f"Hostname={r.get('Hostname','')}",
+                        f"IP={r.get('IP','')}",
+                        f"Severity={r.get('Severity','')}",
+                        f"Event_Message={r.get('Event_Message','')}",
+                    ]
+                    rows.append(" ".join(parts))
+        # WAS 이벤트 CSV (1분 단위)
+        was_csv = base / f"was_event_{date_str}.csv"
+        if was_csv.exists():
+            with was_csv.open("r", encoding="utf-8", errors="ignore", newline="") as f:
+                reader = csv.DictReader(f)
+                for r in reader:
+                    parts = [
+                        "type=WAS_Event",
+                        f"ts={r.get('YYYYMMDDHHmmss','')}",
+                        f"Hostname={r.get('Hostname','')}",
+                        f"Event_Message={r.get('Event_Message','')}",
+                    ]
+                    rows.append(" ".join(parts))
+        # DB 이벤트 CSV (1분 단위)
+        db_csv = base / f"db_event_{date_str}.csv"
+        if db_csv.exists():
+            with db_csv.open("r", encoding="utf-8", errors="ignore", newline="") as f:
+                reader = csv.DictReader(f)
+                for r in reader:
+                    parts = [
+                        "type=DB_Event",
+                        f"ts={r.get('YYYYMMDDHHmmss','')}",
+                        f"Hostname={r.get('Hostname','')}",
+                        f"Event_Message={r.get('Event_Message','')}",
+                    ]
+                    rows.append(" ".join(parts))
+        return rows
+
+    if settings.VECTORDB_ENABLED:
+        ensure_schema()
 
     for d in date_range(settings.ETL_DAYS):
         texts = []
-        # Oracle 수집(옵션; RAC 설정은 oracle 유틸에서 자동 적용)
-        texts += collect_oracle_rows(d)
+        # Oracle/Mock DB 수집
+        if settings.MOCK_DB_ENABLED:
+            texts += collect_mock_db_rows(d)
+        else:
+            texts += collect_oracle_rows(d)
         # WAS 로그 수집(옵션)
         if settings.LOG_WAS_ENABLED:
             texts += collect_logs(d, settings.WAS_LOG_DIR, "middleware")
@@ -62,18 +136,28 @@ def run_etl():
         if not texts:
             continue
 
-        # 임베딩 변환
-        vectors = embed_texts(texts)
-
-        # pgvector에 적재
-        with get_pg_connection() as conn:
-            with conn.cursor() as cur:
-                for text, vec in zip(texts, vectors):
-                    cur.execute(
-                        "INSERT INTO documents (source, content, embedding) VALUES (%s, %s, %s)",
-                        (d, text, vec),
-                    )
-            conn.commit()
+        if settings.VECTORDB_ENABLED:
+            # 임베딩 변환
+            vectors = embed_texts(texts)
+            # pgvector에 적재
+            with get_pg_connection() as conn:
+                with conn.cursor() as cur:
+                    for text, vec in zip(texts, vectors):
+                        cur.execute(
+                            "INSERT INTO documents (source, content, embedding) VALUES (%s, %s, %s)",
+                            (d, text, vec),
+                        )
+                conn.commit()
+        else:
+            # 로컬 파일로 적재 결과를 기록 (모의 실행)
+            out_dir = Path(settings.MOCK_DB_DIR) / "output"
+            out_dir.mkdir(parents=True, exist_ok=True)
+            out_file = out_dir / f"documents_{d}.jsonl"
+            with out_file.open("w", encoding="utf-8") as f:
+                for text in texts:
+                    # 벡터는 길어지므로 저장하지 않고 길이만 기록
+                    rec = {"source": d, "content": text, "embedding_dim": 0}
+                    f.write(str(rec) + "\n")
 
 if __name__ == "__main__":
     run_etl()

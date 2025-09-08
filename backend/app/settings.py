@@ -22,6 +22,7 @@ class Settings(BaseSettings):
     FRONTEND_ORIGIN: str = Field(default="http://localhost:8501")
 
     # Vector DB (PostgreSQL + pgvector)
+    VECTORDB_ENABLED: bool = Field(default=False)
     VECTORDB_HOST: str = Field(default="localhost")
     VECTORDB_PORT: int = Field(default=5432)
     VECTORDB_DB: str = Field(default="monchat")
@@ -51,6 +52,10 @@ class Settings(BaseSettings):
     ORACLE_RETRY_COUNT: int = Field(default=3)
     ORACLE_RETRY_DELAY: int = Field(default=1)  # 초
 
+    # Mock DB (파일 기반 대체 수집)
+    MOCK_DB_ENABLED: bool = Field(default=False)
+    MOCK_DB_DIR: str = Field(default="mock_data")
+
     # 로그 소스 경로/활성화
     LOG_WAS_ENABLED: bool = Field(default=False)
     LOG_DB_ENABLED: bool = Field(default=False)
@@ -65,6 +70,8 @@ class Settings(BaseSettings):
     # 임베딩 모델 설정
     EMBEDDING_MODEL: str = Field(default="jhgan/ko-sbert-nli")
     EMBEDDING_BATCH_SIZE: int = Field(default=16)
+    # auto | cpu | cuda
+    EMBEDDING_DEVICE: str = Field(default="auto")
 
     # API 서버 설정
     API_HOST: str = Field(default="0.0.0.0")

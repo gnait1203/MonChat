@@ -1,0 +1,3 @@
+﻿Hostname=h2 IP=10.0.0.2 Severity=ERROR Event_Message='OutOfMemory at service X'
+Hostname=h1 IP=10.0.0.1 Severity=WARN Event_Message='Disk usage high on /data'
+Hostname=h3 IP=10.0.0.3 Severity=CRITICAL Event_Message='Ping lost to db-server'

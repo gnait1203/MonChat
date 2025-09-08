@@ -1,0 +1,3 @@
+﻿Hostname=h1 IP=10.0.0.1 CPU_Usage=45% Memory_Usage=62% Swap_Usage=3% Filesystem_Usage=71% Ping_Status=OK
+Hostname=h2 IP=10.0.0.2 CPU_Usage=78% Memory_Usage=81% Swap_Usage=12% Filesystem_Usage=88% Ping_Status=OK
+Hostname=h3 IP=10.0.0.3 CPU_Usage=92% Memory_Usage=90% Swap_Usage=27% Filesystem_Usage=93% Ping_Status=LOSS
