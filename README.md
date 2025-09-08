@@ -166,3 +166,4 @@ python -m streamlit run frontend/app.py --server.port 8501
 ## 주의
 - 최초 실행 시 임베딩 모델 다운로드가 이루어질 수 있습니다(인터넷 필요).
 - 실제 Oracle/로그 소스가 없을 경우 해당 수집은 비활성화하세요."# MonChat" 
+"# MonChat2" 
