@@ -25,7 +25,7 @@ class Settings(BaseSettings):
     APP_NAME: str = Field(default="MonChat")
     ENV: str = Field(default="dev")
     DEBUG: bool = Field(default=True)
-    FRONTEND_ORIGIN: str = Field(default="http://localhost:8501")
+    FRONTEND_ORIGIN: str = Field(default="http://localhost:8443")
 
     # Vector DB (PostgreSQL + pgvector)
     VECTORDB_ENABLED: bool = Field(default=False)
@@ -87,7 +87,7 @@ class Settings(BaseSettings):
 
     # API 서버 설정
     API_HOST: str = Field(default="0.0.0.0")
-    API_PORT: int = Field(default=8000)
+    API_PORT: int = Field(default=5443)
 
     # 내부 LLM 설정 (Ollama 기반 사내 서버)
     LLM_ENABLED: bool = Field(default=False)
@@ -98,7 +98,7 @@ class Settings(BaseSettings):
     LLM_STREAM: bool = Field(default=False)
 
     # Streamlit 설정
-    STREAMLIT_PORT: int = Field(default=8501)
+    STREAMLIT_PORT: int = Field(default=8443)
 
     # NOTE: 불리언 환경변수 값 앞뒤 공백으로 인한 파싱 실패 방지
     @field_validator(

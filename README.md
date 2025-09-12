@@ -48,30 +48,30 @@ docker compose up -d
 4) 백엔드 실행
 ```bash
 # Linux/macOS - 일반 실행 (개발용)
-uvicorn backend.app.main:app --host 0.0.0.0 --port 8000 --reload
+uvicorn backend.app.main:app --host 0.0.0.0 --port 5443 --reload
 
 # Linux/macOS - 백그라운드 실행 (운영용)
-nohup uvicorn backend.app.main:app --host 0.0.0.0 --port 8000 > backend.log 2>&1 &
+nohup uvicorn backend.app.main:app --host 0.0.0.0 --port 5443 > backend.log 2>&1 &
 
 # 또는 Python 모듈로 백그라운드 실행
-nohup python -m uvicorn backend.app.main:app --host 0.0.0.0 --port 8000 > backend.log 2>&1 &
+nohup python -m uvicorn backend.app.main:app --host 0.0.0.0 --port 5443 > backend.log 2>&1 &
 ```
 
 5) 프론트엔드 실행
 ```bash
 # Linux/macOS - 일반 실행 (개발용)
-streamlit run frontend/app.py --server.port 8501
+streamlit run frontend/app.py --server.port 8443
 
 # Linux/macOS - 백그라운드 실행 (운영용)
-nohup streamlit run frontend/app.py --server.port 8501 > frontend.log 2>&1 &
+nohup streamlit run frontend/app.py --server.port 8443 > frontend.log 2>&1 &
 
 # 또는 Python 모듈로 백그라운드 실행
-nohup python -m streamlit run frontend/app.py --server.port 8501 > frontend.log 2>&1 &
+nohup python -m streamlit run frontend/app.py --server.port 8443 > frontend.log 2>&1 &
 ```
 
 6) LLM 프록시 테스트
 ```bash
-curl -X POST http://127.0.0.1:8000/llm/chat \
+curl -X POST http://127.0.0.1:5443/llm/chat \
   -H "Content-Type: application/json" \
   -d '{"prompt":"회의 내용을 요약해줘.", "model":"qwen3:8b", "stream": false}'
 ```
@@ -175,10 +175,10 @@ pip install uvicorn[standard] streamlit
 3) **Python 모듈로 직접 실행**:
 ```bash
 # uvicorn 대신
-python -m uvicorn backend.app.main:app --host 0.0.0.0 --port 8000 --reload
+python -m uvicorn backend.app.main:app --host 0.0.0.0 --port 5443 --reload
 
 # streamlit 대신  
-python -m streamlit run frontend/app.py --server.port 8501
+python -m streamlit run frontend/app.py --server.port 8443
 ```
 
 ## 주의

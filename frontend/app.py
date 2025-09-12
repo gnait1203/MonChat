@@ -13,7 +13,7 @@ from datetime import datetime
 
 # API 서버 위치는 환경변수로 제어
 API_HOST = os.getenv("API_HOST", "127.0.0.1")
-API_PORT = os.getenv("API_PORT", "8000")
+API_PORT = os.getenv("API_PORT", "5443")
 API_BASE = f"http://{API_HOST}:{API_PORT}"
 
 st.set_page_config(page_title="MonChat", layout="wide")

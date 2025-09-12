@@ -167,6 +167,7 @@ cython_debug/
 .env.example
 nohup.out
 hf/
+.env.bak
 
 # Database
 *.db
