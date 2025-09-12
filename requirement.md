@@ -104,7 +104,7 @@
     -   `psycopg2-binary`: PostgreSQL 연결
     -   `cx_Oracle`: Oracle DB 연결
     -   `pandas`: 데이터 처리 및 분석
-    -   `langchain` 또는 `llama-index`: LLM 기반 애플리케이션 개발 프레임워크 (데이터 로딩, 임베딩, 검색 등)
+    -   (선택) `langchain` 또는 `llama-index`: LLM 기반 애플리케이션 개발 프레임워크 (데이터 로딩, 임베딩, 검색 등)
     -   `sentence-transformers`: 텍스트 임베딩(벡터화)
     -   `apscheduler`: 데이터 수집 스케줄링
 
@@ -116,6 +116,26 @@
 2.  **의존성 파일**: `requirements.txt` (pip 패키지 목록)
 3.  **컨테이너 설정 파일**: `docker-compose.yml` (pgvector 실행용)
 4.  **실행 가이드**: `README.md` 파일 (프로젝트 설정, 실행 방법, API 엔드포인트 설명 포함)
+
+---
+
+## 9. 내부 LLM 연동 사양 (사내 Ollama)
+
+- **API Base**: `http://pgaiap09:11434`
+- **Endpoint**: `POST /api/chat`
+- **모델명**: `gemma3:27b-it-q4_0`, `qwen3:8b`
+- **요청 예시**:
+```json
+{
+  "model": "qwen3:8b",
+  "messages": [{"role":"user","content":"회의 내용을 요약해줘."}],
+  "stream": false
+}
+```
+- **프로젝트 적용**:
+  - 백엔드: `/llm/chat` 프록시 추가 (`backend/app/routers/llm.py`)
+  - 설정: `.env` 에서 `LLM_ENABLED`,`LLM_BASE_URL`,`LLM_DEFAULT_MODEL` 등 제어
+  - 프론트: Streamlit "LLM 대화" 탭 제공 (모델 선택, 프롬프트 입력)
 
 ---
 

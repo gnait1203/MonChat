@@ -78,8 +78,8 @@ if "chat_history" not in st.session_state:
 if "persist_history" not in st.session_state:
     st.session_state.persist_history = True
 
-# 탭 구성: Q&A / 시각화 / 상태 / 이력
-tabs = st.tabs(["Q&A", "시각화", "상태", "이력"])
+# 탭 구성: Q&A / 시각화 / 상태 / 이력 / LLM 대화
+tabs = st.tabs(["Q&A", "시각화", "상태", "이력", "LLM 대화"])
 
 # 사이드바: 이력 저장 ON/OFF, 다운로드, 초기화
 with st.sidebar:
@@ -112,17 +112,30 @@ with tabs[0]:
     if st.button("검색") and q:
         try:
             # 백엔드 /qa 엔드포인트 호출
-            res = requests.post(f"{API_BASE}/qa", json={"question": q, "top_k": top_k}, timeout=30)
+            res = requests.post(f"{API_BASE}/qa", json={"question": q, "top_k": top_k}, timeout=60)
             res.raise_for_status()
             data = res.json()
-            # 화면 출력
-            st.write("Question:", data.get("question"))
-            st.write("Answers:", data.get("answers"))
+            # 화면 출력 (점수/근거 포함 테이블)
+            st.markdown("**질문**")
+            st.write(data.get("question"))
+            answers = data.get("answers", [])
+            if answers:
+                st.markdown("**결과 (상위 TopK)**")
+                for i, a in enumerate(answers, start=1):
+                    score = a.get("score")
+                    source = a.get("source", "-")
+                    content = a.get("content", a)
+                    with st.expander(f"#{i} | score={score:.4f}" if isinstance(score, (int, float)) else f"#{i}"):
+                        st.markdown(f"**source**: {source}")
+                        st.code(str(content), language="text")
+            else:
+                st.info("검색 결과가 없습니다.")
+
             # 이력 저장
             record = {
                 "ts": datetime.utcnow().isoformat() + "Z",
                 "question": data.get("question", q),
-                "answers": data.get("answers", []),
+                "answers": answers,
                 "top_k": top_k,
             }
             st.session_state.chat_history.append(record)
@@ -198,3 +211,47 @@ with tabs[3]:
             else:
                 answer_text = str(answers) if answers else "(없음)"
             st.markdown(f"- [{ts}] 질문 : {qtext} / 답변 : {answer_text}")
+
+with tabs[4]:
+    st.subheader("LLM 대화 (사내 GPU 서버)")
+    st.caption("사내 Ollama 기반 LLM API를 통해 텍스트 생성/요약/질의응답을 수행합니다.")
+    prompt = st.text_area("프롬프트를 입력하세요", height=150, placeholder="요약/생성/질문 등 자유롭게 입력...")
+    model = st.selectbox("모델 선택", ["qwen3:8b", "gemma3:27b-it-q4_0"], index=0)
+    col_a, col_b = st.columns([1, 3])
+    with col_a:
+        run = st.button("생성")
+    if run and prompt.strip():
+        try:
+            res = requests.post(
+                f"{API_BASE}/llm/chat",
+                json={"prompt": prompt, "model": model, "stream": False},
+                timeout=120,
+            )
+            if res.status_code == 400:
+                try:
+                    detail = res.json().get("detail", "LLM 사용이 비활성화되었습니다.")
+                except Exception:
+                    detail = "LLM 사용이 비활성화되었습니다. (LLM_ENABLED=false)"
+                st.error(detail)
+            else:
+                res.raise_for_status()
+                data = res.json()
+                text = data.get("text", "")
+                st.markdown("**응답**")
+                st.write(text or "(빈 응답)")
+
+                # 이력 저장 (타임라인 호환을 위해 answers에 텍스트를 넣어둠)
+                record = {
+                    "ts": datetime.utcnow().isoformat() + "Z",
+                    "type": "llm",
+                    "prompt": prompt,
+                    "model": data.get("model", model),
+                    "text": text,
+                    "raw": data,
+                    "answers": [text] if text else [],
+                }
+                st.session_state.chat_history.append(record)
+                if st.session_state.persist_history:
+                    append_history(record)
+        except Exception as e:
+            st.error(str(e))

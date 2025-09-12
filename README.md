@@ -7,6 +7,7 @@ Streamlit + FastAPI + pgvector 기반의 데이터 분석 Q&A 시스템 예제 �
 - API(Backend): FastAPI
 - VectorDB: PostgreSQL + pgvector (Docker)
 - ETL: Oracle/로그 수집 → 임베딩 → VectorDB 적재, APScheduler
+ - 내부 LLM: 사내 Ollama API 연동(`/llm/chat`)
 
 ## 빠른 시작
 1) 의존성 설치
@@ -26,6 +27,16 @@ pip install -r requirements.txt
 ```bash
 copy .env.example .env  # Windows
 # 필요 값 수정 (DB, 로그 경로 등)
+```
+
+LLM 연동을 사용하려면 `.env`에 아래 항목이 설정되어야 합니다.
+```
+LLM_ENABLED=true
+LLM_BASE_URL=http://pgaiap09:11434
+LLM_CHAT_PATH=/api/chat
+LLM_DEFAULT_MODEL=qwen3:8b   # 또는 gemma3:27b-it-q4_0
+LLM_STREAM=false
+LLM_TIMEOUT=120
 ```
 
 3) VectorDB 실행 (Docker)
@@ -58,7 +69,14 @@ nohup streamlit run frontend/app.py --server.port 8501 > frontend.log 2>&1 &
 nohup python -m streamlit run frontend/app.py --server.port 8501 > frontend.log 2>&1 &
 ```
 
-6) ETL 실행(수동)
+6) LLM 프록시 테스트
+```bash
+curl -X POST http://127.0.0.1:8000/llm/chat \
+  -H "Content-Type: application/json" \
+  -d '{"prompt":"회의 내용을 요약해줘.", "model":"qwen3:8b", "stream": false}'
+```
+
+7) ETL 실행(수동)
 ```bash
 # 프로젝트 루트에서 모듈로 실행 (권장)
 python -m etl.pipeline
@@ -72,7 +90,7 @@ set PYTHONPATH=%CD%;%PYTHONPATH%    # Windows CMD
 python etl/pipeline.py
 ```
 
-7) 스케줄러 실행(옵션)
+8) 스케줄러 실행(옵션)
 ```bash
 # 모듈로 실행 (권장)
 python -m etl.sched
@@ -165,5 +183,7 @@ python -m streamlit run frontend/app.py --server.port 8501
 
 ## 주의
 - 최초 실행 시 임베딩 모델 다운로드가 이루어질 수 있습니다(인터넷 필요).
-- 실제 Oracle/로그 소스가 없을 경우 해당 수집은 비활성화하세요."# MonChat" 
-"# MonChat2" 
+- 실제 Oracle/로그 소스가 없을 경우 해당 수집은 비활성화하세요.
+
+## 변경 이력
+- 2025-09-12: 내부 LLM(Ollama) 연동 추가, `/llm/chat` 엔드포인트 및 프론트 "LLM 대화" 탭 지원

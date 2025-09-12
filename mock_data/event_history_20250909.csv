@@ -1,0 +1,132 @@
+﻿YYYYMMDDHHmmss,Hostname,IP,Severity,Event_Message
+20250908000100,h2,10.0.0.2,INFO,Login failures detected
+20250908000500,h1,10.0.0.1,WARN,Login failures detected
+20250908000600,h2,10.0.0.2,WARN,Disk usage high on /data
+20250908000700,h3,10.0.0.3,ERROR,Disk usage high on /data
+20250908000800,h1,10.0.0.1,CRITICAL,OutOfMemory at service X
+20250908001300,h3,10.0.0.3,WARN,Ping lost to db-server
+20250908004000,h2,10.0.0.2,CRITICAL,Disk usage high on /data
+20250908010400,h1,10.0.0.1,ERROR,Service restarted
+20250908011300,h1,10.0.0.1,WARN,OutOfMemory at service X
+20250908011900,h2,10.0.0.2,ERROR,Login failures detected
+20250908012800,h3,10.0.0.3,CRITICAL,Login failures detected
+20250908020900,h1,10.0.0.1,ERROR,OutOfMemory at service X
+20250908023500,h1,10.0.0.1,INFO,Login failures detected
+20250908024300,h3,10.0.0.3,ERROR,OutOfMemory at service X
+20250908025900,h1,10.0.0.1,INFO,Disk usage high on /data
+20250908030900,h1,10.0.0.1,ERROR,Login failures detected
+20250908031100,h1,10.0.0.1,WARN,Ping lost to db-server
+20250908031500,h1,10.0.0.1,INFO,Login failures detected
+20250908032000,h3,10.0.0.3,ERROR,Ping lost to db-server
+20250908032400,h2,10.0.0.2,INFO,Service restarted
+20250908034400,h2,10.0.0.2,INFO,Disk usage high on /data
+20250908035000,h2,10.0.0.2,INFO,Ping lost to db-server
+20250908035100,h1,10.0.0.1,CRITICAL,Login failures detected
+20250908040200,h3,10.0.0.3,WARN,Service restarted
+20250908040600,h3,10.0.0.3,CRITICAL,Disk usage high on /data
+20250908041200,h3,10.0.0.3,INFO,Disk usage high on /data
+20250908042100,h1,10.0.0.1,INFO,Login failures detected
+20250908042600,h2,10.0.0.2,INFO,Service restarted
+20250908043100,h2,10.0.0.2,WARN,Login failures detected
+20250908043600,h1,10.0.0.1,CRITICAL,Ping lost to db-server
+20250908043700,h2,10.0.0.2,WARN,OutOfMemory at service X
+20250908043800,h3,10.0.0.3,WARN,Login failures detected
+20250908044900,h3,10.0.0.3,WARN,Service restarted
+20250908050900,h2,10.0.0.2,WARN,Disk usage high on /data
+20250908051800,h3,10.0.0.3,WARN,OutOfMemory at service X
+20250908055700,h1,10.0.0.1,CRITICAL,Service restarted
+20250908060600,h1,10.0.0.1,CRITICAL,Disk usage high on /data
+20250908060700,h2,10.0.0.2,CRITICAL,Login failures detected
+20250908061000,h2,10.0.0.2,INFO,Login failures detected
+20250908064800,h1,10.0.0.1,INFO,OutOfMemory at service X
+20250908071500,h2,10.0.0.2,WARN,Ping lost to db-server
+20250908072300,h3,10.0.0.3,ERROR,Login failures detected
+20250908072700,h1,10.0.0.1,ERROR,Ping lost to db-server
+20250908073000,h1,10.0.0.1,INFO,Login failures detected
+20250908074900,h2,10.0.0.2,ERROR,Disk usage high on /data
+20250908084200,h2,10.0.0.2,WARN,Login failures detected
+20250908084500,h3,10.0.0.3,WARN,Login failures detected
+20250908085000,h3,10.0.0.3,CRITICAL,Service restarted
+20250908085100,h2,10.0.0.2,INFO,OutOfMemory at service X
+20250908090900,h3,10.0.0.3,INFO,Disk usage high on /data
+20250908091300,h3,10.0.0.3,INFO,Service restarted
+20250908093100,h1,10.0.0.1,INFO,Service restarted
+20250908093200,h3,10.0.0.3,CRITICAL,Service restarted
+20250908094000,h3,10.0.0.3,INFO,Ping lost to db-server
+20250908094300,h3,10.0.0.3,CRITICAL,Disk usage high on /data
+20250908094700,h2,10.0.0.2,ERROR,Ping lost to db-server
+20250908095200,h3,10.0.0.3,WARN,OutOfMemory at service X
+20250908100300,h1,10.0.0.1,ERROR,Service restarted
+20250908101200,h2,10.0.0.2,CRITICAL,Ping lost to db-server
+20250908101800,h3,10.0.0.3,ERROR,OutOfMemory at service X
+20250908101900,h3,10.0.0.3,ERROR,Login failures detected
+20250908105300,h3,10.0.0.3,ERROR,Disk usage high on /data
+20250908111400,h3,10.0.0.3,ERROR,Disk usage high on /data
+20250908111600,h2,10.0.0.2,INFO,Login failures detected
+20250908113600,h2,10.0.0.2,INFO,Disk usage high on /data
+20250908120200,h2,10.0.0.2,ERROR,Service restarted
+20250908120700,h3,10.0.0.3,ERROR,Service restarted
+20250908121600,h2,10.0.0.2,ERROR,OutOfMemory at service X
+20250908123300,h3,10.0.0.3,INFO,Disk usage high on /data
+20250908124700,h1,10.0.0.1,ERROR,Ping lost to db-server
+20250908124800,h2,10.0.0.2,WARN,Ping lost to db-server
+20250908131800,h2,10.0.0.2,ERROR,Service restarted
+20250908131900,h3,10.0.0.3,ERROR,Login failures detected
+20250908132200,h3,10.0.0.3,CRITICAL,Ping lost to db-server
+20250908133500,h3,10.0.0.3,INFO,Login failures detected
+20250908133600,h1,10.0.0.1,INFO,Login failures detected
+20250908141000,h1,10.0.0.1,ERROR,OutOfMemory at service X
+20250908141600,h2,10.0.0.2,WARN,Ping lost to db-server
+20250908142600,h3,10.0.0.3,INFO,Ping lost to db-server
+20250908144400,h1,10.0.0.1,CRITICAL,Disk usage high on /data
+20250908152900,h2,10.0.0.2,CRITICAL,Login failures detected
+20250908153700,h2,10.0.0.2,ERROR,Disk usage high on /data
+20250908155600,h3,10.0.0.3,INFO,Ping lost to db-server
+20250908155700,h2,10.0.0.2,CRITICAL,OutOfMemory at service X
+20250908162800,h2,10.0.0.2,CRITICAL,Service restarted
+20250908163100,h2,10.0.0.2,INFO,Disk usage high on /data
+20250908163300,h2,10.0.0.2,ERROR,OutOfMemory at service X
+20250908163500,h2,10.0.0.2,INFO,Ping lost to db-server
+20250908164400,h1,10.0.0.1,WARN,Login failures detected
+20250908165900,h2,10.0.0.2,INFO,OutOfMemory at service X
+20250908170600,h1,10.0.0.1,WARN,OutOfMemory at service X
+20250908171300,h2,10.0.0.2,WARN,Ping lost to db-server
+20250908172200,h1,10.0.0.1,ERROR,OutOfMemory at service X
+20250908173000,h3,10.0.0.3,ERROR,Disk usage high on /data
+20250908173700,h1,10.0.0.1,INFO,Login failures detected
+20250908173900,h3,10.0.0.3,WARN,Disk usage high on /data
+20250908174000,h3,10.0.0.3,ERROR,Disk usage high on /data
+20250908174100,h1,10.0.0.1,ERROR,OutOfMemory at service X
+20250908175700,h1,10.0.0.1,CRITICAL,Login failures detected
+20250908181400,h2,10.0.0.2,WARN,Login failures detected
+20250908181500,h1,10.0.0.1,CRITICAL,Service restarted
+20250908183600,h3,10.0.0.3,INFO,Disk usage high on /data
+20250908184500,h1,10.0.0.1,WARN,OutOfMemory at service X
+20250908191600,h1,10.0.0.1,INFO,Service restarted
+20250908193100,h2,10.0.0.2,CRITICAL,OutOfMemory at service X
+20250908195300,h1,10.0.0.1,WARN,Service restarted
+20250908200200,h2,10.0.0.2,ERROR,OutOfMemory at service X
+20250908200700,h3,10.0.0.3,WARN,Service restarted
+20250908201400,h2,10.0.0.2,INFO,Disk usage high on /data
+20250908201900,h1,10.0.0.1,CRITICAL,Login failures detected
+20250908202400,h2,10.0.0.2,CRITICAL,Service restarted
+20250908202600,h1,10.0.0.1,CRITICAL,Service restarted
+20250908203800,h3,10.0.0.3,ERROR,Disk usage high on /data
+20250908205800,h1,10.0.0.1,WARN,Disk usage high on /data
+20250908211800,h3,10.0.0.3,INFO,Disk usage high on /data
+20250908212000,h3,10.0.0.3,WARN,Disk usage high on /data
+20250908213500,h2,10.0.0.2,ERROR,Login failures detected
+20250908213600,h3,10.0.0.3,CRITICAL,Service restarted
+20250908213900,h3,10.0.0.3,CRITICAL,Login failures detected
+20250908214300,h1,10.0.0.1,ERROR,Ping lost to db-server
+20250908215500,h2,10.0.0.2,INFO,Ping lost to db-server
+20250908220100,h1,10.0.0.1,ERROR,Disk usage high on /data
+20250908220600,h3,10.0.0.3,INFO,Disk usage high on /data
+20250908223400,h3,10.0.0.3,CRITICAL,OutOfMemory at service X
+20250908223900,h2,10.0.0.2,WARN,Disk usage high on /data
+20250908230800,h1,10.0.0.1,CRITICAL,Ping lost to db-server
+20250908231600,h3,10.0.0.3,INFO,Service restarted
+20250908232900,h1,10.0.0.1,CRITICAL,Disk usage high on /data
+20250908233900,h3,10.0.0.3,CRITICAL,Ping lost to db-server
+20250908234300,h3,10.0.0.3,WARN,Ping lost to db-server
+20250908234600,h1,10.0.0.1,CRITICAL,Login failures detected

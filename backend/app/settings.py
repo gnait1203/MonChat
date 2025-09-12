@@ -6,6 +6,7 @@
 
 from pydantic_settings import BaseSettings, SettingsConfigDict
 from pydantic import Field
+from pydantic import field_validator
 
 
 class Settings(BaseSettings):
@@ -13,7 +14,12 @@ class Settings(BaseSettings):
 
     .env 파일과 OS 환경변수에서 값을 로드한다. 기본값은 개발 환경 기준으로 지정되어 있다.
     """
-    model_config = SettingsConfigDict(env_file=".env", env_file_encoding="utf-8", case_sensitive=False)
+    model_config = SettingsConfigDict(
+        env_file=".env",
+        env_file_encoding="utf-8",
+        case_sensitive=True,
+        extra="ignore",
+    )
 
     # 애플리케이션 공통
     APP_NAME: str = Field(default="MonChat")
@@ -29,7 +35,7 @@ class Settings(BaseSettings):
     VECTORDB_USER: str = Field(default="monchat")
     VECTORDB_PASSWORD: str = Field(default="monchat")
     VECTORDB_SSLMODE: str = Field(default="disable")
-    EMBEDDING_DIM: int = Field(default=768)
+    EMBEDDING_DIM: int = Field(default=384)
 
     # Oracle (상품처리계)
     ORACLE_ENABLED: bool = Field(default=False)
@@ -68,17 +74,61 @@ class Settings(BaseSettings):
     SCHEDULER_CRON: str = Field(default="0 3 * * *")
 
     # 임베딩 모델 설정
-    EMBEDDING_MODEL: str = Field(default="jhgan/ko-sbert-nli")
+    EMBEDDING_MODEL: str = Field(default="sentence-transformers/all-MiniLM-L6-v2")
     EMBEDDING_BATCH_SIZE: int = Field(default=16)
     # auto | cpu | cuda
     EMBEDDING_DEVICE: str = Field(default="auto")
+
+    # Hugging Face 설정
+    # 개인 토큰(프라이빗 모델 접근 시 사용), 캐시/로컬 모델 디렉터리
+    HF_TOKEN: str = Field(default="")
+    HF_CACHE_DIR: str = Field(default="")
+    HF_LOCAL_MODEL_DIR: str = Field(default="")
 
     # API 서버 설정
     API_HOST: str = Field(default="0.0.0.0")
     API_PORT: int = Field(default=8000)
 
+    # 내부 LLM 설정 (Ollama 기반 사내 서버)
+    LLM_ENABLED: bool = Field(default=False)
+    LLM_BASE_URL: str = Field(default="http://pgaiap09:11434")
+    LLM_CHAT_PATH: str = Field(default="/api/chat")
+    LLM_DEFAULT_MODEL: str = Field(default="qwen3:8b")
+    LLM_TIMEOUT: int = Field(default=120)
+    LLM_STREAM: bool = Field(default=False)
+
     # Streamlit 설정
     STREAMLIT_PORT: int = Field(default=8501)
 
+    # NOTE: 불리언 환경변수 값 앞뒤 공백으로 인한 파싱 실패 방지
+    @field_validator(
+        "VECTORDB_ENABLED",
+        "ORACLE_ENABLED",
+        "LOG_WAS_ENABLED",
+        "LOG_DB_ENABLED",
+        "SCHEDULER_ENABLED",
+        "DEBUG",
+        "LLM_ENABLED",
+        "LLM_STREAM",
+        mode="before",
+    )
+    @classmethod
+    def _strip_bool_strings(cls, v):  # type: ignore[override]
+        if isinstance(v, str):
+            return v.strip()
+        return v
+
+    # NOTE: 문자열 기반 경로/토큰의 앞뒤 공백 제거 (HF 계열)
+    @field_validator(
+        "HF_TOKEN",
+        "HF_CACHE_DIR",
+        "HF_LOCAL_MODEL_DIR",
+        mode="before",
+    )
+    @classmethod
+    def _strip_hf_strings(cls, v):  # type: ignore[override]
+        if isinstance(v, str):
+            return v.strip()
+        return v
 
 settings = Settings()

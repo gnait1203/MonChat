@@ -5,8 +5,15 @@ ETL 파이프라인
 """
 
 import os
-from datetime import datetime, timedelta
+import sys
 from pathlib import Path
+
+# 스크립트 직접 실행 시 루트 경로를 PYTHONPATH에 추가하여 절대 임포트 지원
+_THIS_DIR = Path(__file__).resolve().parent
+_ROOT_DIR = _THIS_DIR.parent
+if str(_ROOT_DIR) not in sys.path:
+    sys.path.insert(0, str(_ROOT_DIR))
+from datetime import datetime, timedelta
 import csv
 from backend.app.settings import settings
 from backend.app.embeddings import embed_texts
@@ -52,6 +59,10 @@ def run_etl():
     - MOCK_DB_ENABLED일 경우 파일 기반(history_/event_history_) 텍스트를 로드한다.
     - VECTORDB_ENABLED가 False이면 로컬 파일에 적재 결과를 저장한다(mock 출력).
     """
+    print(
+        f"[ETL] start | ETL_DAYS={settings.ETL_DAYS} MOCK_DB_ENABLED={settings.MOCK_DB_ENABLED} "
+        f"VECTORDB_ENABLED={settings.VECTORDB_ENABLED} MOCK_DB_DIR={settings.MOCK_DB_DIR}"
+    )
     def collect_mock_db_rows(date_str: str) -> list[str]:
         base = Path(settings.MOCK_DB_DIR)
         rows: list[str] = []
@@ -117,6 +128,7 @@ def run_etl():
         return rows
 
     if settings.VECTORDB_ENABLED:
+        print("[ETL] ensuring pgvector schema ...")
         ensure_schema()
 
     for d in date_range(settings.ETL_DAYS):
@@ -134,20 +146,27 @@ def run_etl():
             texts += collect_logs(d, settings.DB_LOG_DIR, "db")
 
         if not texts:
+            print(f"[ETL] {d} | no texts found, skip")
             continue
+        print(f"[ETL] {d} | collected {len(texts)} texts")
 
         if settings.VECTORDB_ENABLED:
             # 임베딩 변환
+            print(f"[ETL] {d} | embedding {len(texts)} texts ...")
             vectors = embed_texts(texts)
-            # pgvector에 적재
+            # pgvector는 벡터 문자열 형식('[v1, v2, ...]') 또는 리스트 바인딩을 허용한다.
+            # psycopg2 기본 커서에서는 명시적 캐스팅이 안전하다.
             with get_pg_connection() as conn:
                 with conn.cursor() as cur:
                     for text, vec in zip(texts, vectors):
+                        # 벡터를 공백 구분 문자열로 변환하고 vector 캐스팅
+                        vec_str = "[" + ",".join(f"{float(x):.6f}" for x in vec) + "]"
                         cur.execute(
-                            "INSERT INTO documents (source, content, embedding) VALUES (%s, %s, %s)",
-                            (d, text, vec),
+                            "INSERT INTO documents (source, content, embedding) VALUES (%s, %s, %s::vector)",
+                            (d, text, vec_str),
                         )
                 conn.commit()
+            print(f"[ETL] {d} | inserted {len(texts)} rows")
         else:
             # 로컬 파일로 적재 결과를 기록 (모의 실행)
             out_dir = Path(settings.MOCK_DB_DIR) / "output"
@@ -158,6 +177,7 @@ def run_etl():
                     # 벡터는 길어지므로 저장하지 않고 길이만 기록
                     rec = {"source": d, "content": text, "embedding_dim": 0}
                     f.write(str(rec) + "\n")
+            print(f"[ETL] {d} | wrote {len(texts)} rows to {out_file}")
 
 if __name__ == "__main__":
     run_etl()

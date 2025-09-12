@@ -1,0 +1,88 @@
+﻿YYYYMMDDHHmmss,Hostname,Event_Message
+20250908001100,h2,Oracle ORA Event: ORA-01555 snapshot too old
+20250908002400,h1,Oracle ORA Event: ORA-00060 deadlock detected
+20250908003900,h3,Oracle ORA Event: ORA-01555 snapshot too old
+20250908004500,h1,Oracle ORA Event: ORA-1653 unable to extend table
+20250908011000,h1,Oracle ORA Event: ORA-00060 deadlock detected
+20250908012500,h1,Oracle ORA Event: ORA-1653 unable to extend table
+20250908013500,h1,Oracle ORA Event: ORA-01555 snapshot too old
+20250908013600,h2,Oracle ORA Event: ORA-01555 snapshot too old
+20250908020700,h1,Oracle ORA Event: ORA-00060 deadlock detected
+20250908021100,h2,Oracle ORA Event: ORA-00060 deadlock detected
+20250908021200,h3,Oracle ORA Event: ORA-12170 TNS:Connect timeout occurred
+20250908023200,h2,Oracle ORA Event: ORA-01555 snapshot too old
+20250908023400,h2,Oracle ORA Event: ORA-01555 snapshot too old
+20250908024200,h2,Oracle ORA Event: ORA-01555 snapshot too old
+20250908031300,h3,Oracle ORA Event: ORA-12170 TNS:Connect timeout occurred
+20250908031800,h2,Oracle ORA Event: ORA-00060 deadlock detected
+20250908032800,h1,Oracle ORA Event: ORA-1653 unable to extend table
+20250908035300,h1,Oracle ORA Event: ORA-00060 deadlock detected
+20250908035900,h2,Oracle ORA Event: ORA-1653 unable to extend table
+20250908040000,h2,Oracle ORA Event: ORA-1653 unable to extend table
+20250908040500,h2,Oracle ORA Event: ORA-1653 unable to extend table
+20250908042700,h3,Oracle ORA Event: ORA-1653 unable to extend table
+20250908043200,h2,Oracle ORA Event: ORA-12170 TNS:Connect timeout occurred
+20250908043900,h3,Oracle ORA Event: ORA-12170 TNS:Connect timeout occurred
+20250908044100,h2,Oracle ORA Event: ORA-12170 TNS:Connect timeout occurred
+20250908051000,h2,Oracle ORA Event: ORA-00060 deadlock detected
+20250908054700,h1,Oracle ORA Event: ORA-1653 unable to extend table
+20250908061600,h3,Oracle ORA Event: ORA-01555 snapshot too old
+20250908070500,h3,Oracle ORA Event: ORA-12170 TNS:Connect timeout occurred
+20250908071300,h3,Oracle ORA Event: ORA-12170 TNS:Connect timeout occurred
+20250908071400,h2,Oracle ORA Event: ORA-1653 unable to extend table
+20250908073700,h1,Oracle ORA Event: ORA-12170 TNS:Connect timeout occurred
+20250908075500,h2,Oracle ORA Event: ORA-01555 snapshot too old
+20250908080800,h1,Oracle ORA Event: ORA-1653 unable to extend table
+20250908081300,h1,Oracle ORA Event: ORA-00060 deadlock detected
+20250908090300,h2,Oracle ORA Event: ORA-00060 deadlock detected
+20250908090600,h2,Oracle ORA Event: ORA-1653 unable to extend table
+20250908091000,h3,Oracle ORA Event: ORA-1653 unable to extend table
+20250908102100,h1,Oracle ORA Event: ORA-00060 deadlock detected
+20250908103100,h3,Oracle ORA Event: ORA-01555 snapshot too old
+20250908104300,h3,Oracle ORA Event: ORA-01555 snapshot too old
+20250908105100,h1,Oracle ORA Event: ORA-1653 unable to extend table
+20250908110300,h3,Oracle ORA Event: ORA-1653 unable to extend table
+20250908111000,h1,Oracle ORA Event: ORA-12170 TNS:Connect timeout occurred
+20250908111400,h2,Oracle ORA Event: ORA-12170 TNS:Connect timeout occurred
+20250908120600,h3,Oracle ORA Event: ORA-01555 snapshot too old
+20250908122000,h3,Oracle ORA Event: ORA-12170 TNS:Connect timeout occurred
+20250908122600,h2,Oracle ORA Event: ORA-01555 snapshot too old
+20250908123000,h2,Oracle ORA Event: ORA-12170 TNS:Connect timeout occurred
+20250908124700,h3,Oracle ORA Event: ORA-12170 TNS:Connect timeout occurred
+20250908125600,h2,Oracle ORA Event: ORA-12170 TNS:Connect timeout occurred
+20250908130900,h1,Oracle ORA Event: ORA-01555 snapshot too old
+20250908143100,h2,Oracle ORA Event: ORA-00060 deadlock detected
+20250908144300,h3,Oracle ORA Event: ORA-01555 snapshot too old
+20250908151300,h3,Oracle ORA Event: ORA-00060 deadlock detected
+20250908151700,h1,Oracle ORA Event: ORA-1653 unable to extend table
+20250908162100,h1,Oracle ORA Event: ORA-1653 unable to extend table
+20250908162200,h2,Oracle ORA Event: ORA-1653 unable to extend table
+20250908171000,h2,Oracle ORA Event: ORA-12170 TNS:Connect timeout occurred
+20250908171300,h1,Oracle ORA Event: ORA-1653 unable to extend table
+20250908173900,h3,Oracle ORA Event: ORA-00060 deadlock detected
+20250908174300,h3,Oracle ORA Event: ORA-1653 unable to extend table
+20250908181200,h1,Oracle ORA Event: ORA-00060 deadlock detected
+20250908181300,h1,Oracle ORA Event: ORA-00060 deadlock detected
+20250908181800,h1,Oracle ORA Event: ORA-1653 unable to extend table
+20250908182000,h2,Oracle ORA Event: ORA-12170 TNS:Connect timeout occurred
+20250908182400,h1,Oracle ORA Event: ORA-1653 unable to extend table
+20250908183900,h2,Oracle ORA Event: ORA-12170 TNS:Connect timeout occurred
+20250908185300,h1,Oracle ORA Event: ORA-00060 deadlock detected
+20250908192700,h3,Oracle ORA Event: ORA-01555 snapshot too old
+20250908193300,h2,Oracle ORA Event: ORA-01555 snapshot too old
+20250908200200,h1,Oracle ORA Event: ORA-00060 deadlock detected
+20250908201400,h2,Oracle ORA Event: ORA-1653 unable to extend table
+20250908203900,h2,Oracle ORA Event: ORA-1653 unable to extend table
+20250908213400,h2,Oracle ORA Event: ORA-12170 TNS:Connect timeout occurred
+20250908220500,h1,Oracle ORA Event: ORA-12170 TNS:Connect timeout occurred
+20250908220800,h3,Oracle ORA Event: ORA-01555 snapshot too old
+20250908222000,h1,Oracle ORA Event: ORA-1653 unable to extend table
+20250908222800,h1,Oracle ORA Event: ORA-01555 snapshot too old
+20250908224900,h1,Oracle ORA Event: ORA-12170 TNS:Connect timeout occurred
+20250908225000,h1,Oracle ORA Event: ORA-1653 unable to extend table
+20250908225500,h2,Oracle ORA Event: ORA-12170 TNS:Connect timeout occurred
+20250908231600,h2,Oracle ORA Event: ORA-12170 TNS:Connect timeout occurred
+20250908232300,h1,Oracle ORA Event: ORA-12170 TNS:Connect timeout occurred
+20250908233300,h3,Oracle ORA Event: ORA-12170 TNS:Connect timeout occurred
+20250908233600,h1,Oracle ORA Event: ORA-00060 deadlock detected
+20250908235400,h1,Oracle ORA Event: ORA-01555 snapshot too old

@@ -8,6 +8,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from .settings import settings
 from .routers import health, qa
+from .routers import llm as llm_router
 
 # 애플리케이션 인스턴스 생성
 app = FastAPI(title=settings.APP_NAME)
@@ -23,7 +24,8 @@ app.add_middleware(
 
 # 라우터 등록
 app.include_router(health.router, prefix="/health", tags=["health"]) 
-app.include_router(qa.router, prefix="/qa", tags=["qa"]) 
+app.include_router(qa.router, prefix="/qa", tags=["qa"])
+app.include_router(llm_router.router, prefix="/llm", tags=["llm"])
 
 @app.get("/")
 def root():
