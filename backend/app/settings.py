@@ -35,7 +35,7 @@ class Settings(BaseSettings):
     VECTORDB_USER: str = Field(default="monchat")
     VECTORDB_PASSWORD: str = Field(default="monchat")
     VECTORDB_SSLMODE: str = Field(default="disable")
-    EMBEDDING_DIM: int = Field(default=384)
+    EMBEDDING_DIM: int = Field(default=1024)
 
     # Oracle (상품처리계)
     ORACLE_ENABLED: bool = Field(default=False)
@@ -74,7 +74,8 @@ class Settings(BaseSettings):
     SCHEDULER_CRON: str = Field(default="0 3 * * *")
 
     # 임베딩 모델 설정
-    EMBEDDING_MODEL: str = Field(default="sentence-transformers/all-MiniLM-L6-v2")
+    # BAAI/bge-m3는 1024차원 멀티링구얼 임베딩 모델
+    EMBEDDING_MODEL: str = Field(default="BAAI/bge-m3")
     EMBEDDING_BATCH_SIZE: int = Field(default=16)
     # auto | cpu | cuda
     EMBEDDING_DEVICE: str = Field(default="auto")

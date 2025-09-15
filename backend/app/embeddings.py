@@ -50,11 +50,18 @@ def get_embedding_model():
         except Exception:
             model_kwargs = {}
 
-    # 로컬 디렉터리가 지정되어 있으면 우선 사용, 아니면 모델 ID 사용
+    # 로컬 디렉터리가 지정되어 있으면 우선 사용, 아니면 모델 ID에서 폴더명 유추 자동 감지
     local_dir = (settings.HF_LOCAL_MODEL_DIR.strip() if settings.HF_LOCAL_MODEL_DIR else "")
+    # 상대 경로로 들어온 경우 프로젝트 루트 기준 절대 경로로 변환
+    if local_dir and not os.path.isabs(local_dir):
+        project_root = os.path.normpath(os.path.join(os.path.dirname(__file__), "..", ".."))
+        candidate = os.path.normpath(os.path.join(project_root, local_dir))
+        if os.path.isdir(candidate):
+            local_dir = candidate
     if not local_dir:
-        # 프로젝트 루트의 hf/all-MiniLM-L6-v2 자동 감지
-        default_local = os.path.normpath(os.path.join(os.path.dirname(__file__), "..", "..", "hf", "all-MiniLM-L6-v2"))
+        # 프로젝트 루트의 hf/<repo-name> 자동 감지 (예: hf/bge-m3, hf/all-MiniLM-L6-v2)
+        repo_name = settings.EMBEDDING_MODEL.split("/")[-1]
+        default_local = os.path.normpath(os.path.join(os.path.dirname(__file__), "..", "..", "hf", repo_name))
         if os.path.isdir(default_local):
             local_dir = default_local
 

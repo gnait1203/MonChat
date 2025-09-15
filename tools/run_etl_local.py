@@ -14,9 +14,14 @@ def main() -> None:
     os.environ["MOCK_DB_ENABLED"] = "true"
     os.environ["VECTORDB_ENABLED"] = "true"
     os.environ["MOCK_DB_DIR"] = "mock_data"
-    # 로컬 허깅페이스 모델 경로 주입(사용자 제공 경로: MonChat/hf/all-MiniLM-L6-v2)
-    model_dir = (project_root / "hf" / "all-MiniLM-L6-v2").resolve()
-    os.environ["HF_LOCAL_MODEL_DIR"] = str(model_dir)
+    # 로컬 허깅페이스 모델 경로 주입(있다면 사용). 기본은 EMBEDDING_MODEL의 repo name을 사용
+    from backend.app.settings import settings  # 지연 임포트
+    # 사용자가 이미 HF_LOCAL_MODEL_DIR를 환경에 지정했다면 그대로 사용
+    if not os.environ.get("HF_LOCAL_MODEL_DIR"):
+        repo_name = settings.EMBEDDING_MODEL.split("/")[-1]
+        candidate_dir = (project_root / "hf" / repo_name).resolve()
+        if candidate_dir.is_dir():
+            os.environ["HF_LOCAL_MODEL_DIR"] = str(candidate_dir)
     # 모델/변환기 경량화 플래그
     os.environ["TRANSFORMERS_NO_TF"] = "1"
     os.environ["TRANSFORMERS_NO_FLAX"] = "1"
